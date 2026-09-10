@@ -4,6 +4,7 @@ package main
 import (
 	"log"
 	"log/slog"
+	"net/http"
 	"os"
 
 	"github.com/juanpadorado/devboard/internal/handler"
@@ -18,11 +19,16 @@ func main() {
 	// Aqui arranca el servidor
 	server := server.New(":8080")
 
+	server.Use(middleware.Recovery(logger))
 	server.Use(middleware.Logger(logger))
 
 	healthHandler := handler.NewHealthHandler()
 
 	server.RegisterRoutes("GET /health", healthHandler)
+
+	server.RegisterRoutes("GET /panic", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		panic("error probocado")
+	}))
 
 	logger.Info("Servidor iniciado en :8080")
 

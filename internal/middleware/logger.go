@@ -1,4 +1,4 @@
-// responseRecorder es un envoltorio alrededor de http.ResponseWriter que permite capturar el código de estado HTTP y si se ha escrito una respuesta.
+// Package middleware proporciona middlewares para el manejo de solicitudes HTTP
 package middleware
 
 import (

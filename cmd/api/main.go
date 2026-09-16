@@ -4,12 +4,20 @@ package main
 import (
 	"os"
 
+	_ "github.com/juanpadorado/devboard/docs"
 	"github.com/juanpadorado/devboard/internal/handler"
 	"github.com/juanpadorado/devboard/internal/logger"
 	"github.com/juanpadorado/devboard/internal/middleware"
 	"github.com/juanpadorado/devboard/internal/server"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
+// @title Devboard API
+// @version 1.0
+// @description API REST para gestion de proyectos
+// @contact.name Soporte Juan Pablo Dorado
+// @host localhost:8080
+// @BasePath /api/v1
 func main() {
 	/* logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
 		Level: slog.LevelInfo,
@@ -24,6 +32,7 @@ func main() {
 
 	healthHandler := handler.NewHealthHandler()
 
+	server.RegisterRoutes("GET /docs/", httpSwagger.WrapHandler)
 	server.RegisterRoutes("GET /health", healthHandler)
 
 	/* server.RegisterRoutes("GET /panic", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
